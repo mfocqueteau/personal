@@ -1,4 +1,4 @@
 import jaconv
 
 
-print(jaconv.alphabet2kana('ochiya'))
+print(jaconv.alphabet2kana('toriya'))
