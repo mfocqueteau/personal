@@ -1,4 +1,4 @@
 import jaconv
 
 
-print(jaconv.alphabet2kana('toriya'))
+print(jaconv.alphabet2kana('arigatou gosai masu'))

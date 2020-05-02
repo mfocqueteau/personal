@@ -14,4 +14,5 @@ class Armor:
     def getW(self):
         return self.var * self.w
 
+
 datos = open("DS2_armor_DW", "r")
