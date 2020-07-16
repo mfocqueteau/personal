@@ -1,0 +1,63 @@
+\documentclass[letter,11pt]{article}
+%\special{papersize=215mm,297mm}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[american]{circuitikz} 
+\usepackage{graphicx}
+\usepackage{color}
+%\usepackage{lscape}
+\usepackage[margin=1in]{geometry}
+
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage{amsmath} % Este paquete define bmatrix
+
+
+\setlength\textwidth{7in}
+\oddsidemargin=-0.5cm
+
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.1pt}
+\renewcommand{\footrulewidth}{0.1pt}
+\headheight=-17pt
+\lhead{\scshape Pontificia Universidad Cat\'olica de Chile}
+\rhead{\scshape CURSO}
+\rfoot{}
+\lfoot{}
+\cfoot{\thepage}
+
+\setlength{\parindent}{0in}
+\setlength{\parskip}{0.1in}
+
+
+
+
+	\begin{flushleft}\small
+		\hspace{-0.17cm}
+ 		 \textbf{Martín Ocqueteau}
+\end{flushleft}
+\vspace{0.3cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\begin{center}
+\LARGE\textbf{Interrogación 1}\\
+\end{center}
+\section*{}
+
+
+
+
+\end{document}
+

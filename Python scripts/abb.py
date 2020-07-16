@@ -58,3 +58,6 @@ class BinTree:
                 route.append(current.value)
             found = value == current.value
         return route
+
+    def __repr__(self):
+        return repr(self.root)
