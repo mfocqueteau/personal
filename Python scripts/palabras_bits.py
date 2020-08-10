@@ -1,28 +1,17 @@
 '''Manejo de vectores lógicos'''
 
 
-def check_overflow(function):
-    '''
-    Asegura que el bit de overflow sea válido
-    -------------------------------------------
-    valor   descripción
-    -------------------------------------------
-    ''      hay overflow
-    '1'     se agrega un bit, no hay overflow
-    '''
-    def checker(*args, **kwargs):
-        if 'overflow' in kwargs:
-            if kwargs['overflow'] not in ('', '1'):
-                raise Exception
-        return function(*args, **kwargs)
-    return checker
+class OverflowError(Exception):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
 
-@check_overflow
 def sucesor(palabra, overflow=''):
     '''
     Retorna sucesor de una palabra en binario, con overflow
     '''
+    if overflow not in ('', '1'):
+        raise OverflowError("parameter 'overflow' must be either '' or '1'")
     largo = len(palabra)
     for i, bit in enumerate(palabra[::-1]):
         if bit == '0':
@@ -56,7 +45,7 @@ def dec_to_bin(num):
     return bin(num)[2:].zfill(16)
 
 
-SUCESORES = gen_sucesores(palabra='1101', overflow='')
+SUCESORES = gen_sucesores(palabra='1101', overflow='2')
 
 # INSTRUCCIONES = ('NOP', 'MOV', 'ADD', 'SUB', 'AND', 'OR', 'NOT', 'XOR', 'SHL',
 #                  'SHR', 'INC', 'DEC', 'CMP', 'JMP', 'JEQ', 'JNE', 'JGT', 'JGE',
