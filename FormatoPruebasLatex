@@ -1,11 +1,8 @@
 \documentclass[letter,11pt]{article}
-%\special{papersize=215mm,297mm}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[american]{circuitikz} 
 \usepackage{graphicx}
 \usepackage{color}
-%\usepackage{lscape}
 \usepackage[margin=1in]{geometry}
 
 
@@ -29,9 +26,9 @@
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0.1pt}
 \renewcommand{\footrulewidth}{0.1pt}
-\headheight=-17pt
+\headheight=-4pt
 \lhead{\scshape Pontificia Universidad Cat\'olica de Chile}
-\rhead{\scshape CURSO}
+\rhead{\scshape Nombre Curso}
 \rfoot{}
 \lfoot{}
 \cfoot{\thepage}
@@ -41,18 +38,16 @@
 
 
 
-
-	\begin{flushleft}\small
-		\hspace{-0.17cm}
- 		 \textbf{Martín Ocqueteau}
-\end{flushleft}
+\begin{document}
+  \begin{flushleft}\small
+    \textbf{Martín Ocqueteau}
+  \end{flushleft}
 \vspace{0.3cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{document}
 \begin{center}
-\LARGE\textbf{Interrogación 1}\\
+\LARGE\textbf{Título}\\
 \end{center}
 \section*{}
 
