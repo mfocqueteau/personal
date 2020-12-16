@@ -1,3 +1,4 @@
+""" De alfabeto occidental a hiragana """
 import jaconv
 
 
