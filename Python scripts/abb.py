@@ -4,6 +4,7 @@ from textwrap import indent
 
 class Node:
     """ Los nodos del árbol """
+
     def __init__(self, value):
         self.value = value
         self.left = None
@@ -24,6 +25,7 @@ class Node:
 
 class BinTree:
     """ El objeto árbol """
+
     def __init__(self):
         self.root = None
 
@@ -47,6 +49,16 @@ class BinTree:
 
     def remove_node(self, value):
         """ Quitar un nodo """
+        current = self.root
+        found = False
+        while not found:
+            while value < current.value and current.left:
+                current = current.left
+            while value > current.value and current.right:
+                current = current.right
+            found = (value == current.value)
+            if not any(current.left, current.right, found):
+                return
 
     def route_node(self, value):
         """ Printea la ruta hasta el nodo de valor 'value' """
@@ -54,14 +66,15 @@ class BinTree:
         route = []
         found = False
         while not found:
-            # Completar
-            while value < current.value:
+            while value < current.value and current.left:
                 current = current.left
                 route.append(current.value)
-            while value > current.value:
+            while value > current.value and current.right:
                 current = current.right
                 route.append(current.value)
-            found = value == current.value
+            found = (value == current.value)
+            if not any(current.left, current.right, found):
+                return []
         return route
 
     def __repr__(self):
