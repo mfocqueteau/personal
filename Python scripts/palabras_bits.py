@@ -2,7 +2,9 @@
 
 
 def sucesor(palabra):
-    """ Retorna sucesor de una palabra en binario, con overflow """
+    """
+    Retorna sucesor de una palabra en binario, con overflow
+    """
     largo = len(palabra)
     for i, bit in enumerate(palabra[::-1]):
         if bit == '0':
@@ -11,14 +13,18 @@ def sucesor(palabra):
 
 
 def gen_sucesores(palabra):
-    """ Retorna un generador de números en binario a partir del ingresado """
+    """
+    Retorna un generador de números en binario a partir del ingresado
+    """
     while True:
         yield palabra
         palabra = sucesor(palabra)
 
 
 def bin_to_dec(palabra):
-    """ Transforma un literal binario en un número decimal """
+    """
+    Transforma un literal binario en un número decimal
+    """
     dec = 0
     for i, bit in enumerate(palabra[::-1]):
         dec += int(bit) * 2**i
@@ -26,7 +32,9 @@ def bin_to_dec(palabra):
 
 
 def dec_to_bin(num):
-    """ Transforma un número decimal a binario """
+    """
+    Transforma un número decimal a binario
+    """
     return bin(num)[2:].zfill(16)
 
 
