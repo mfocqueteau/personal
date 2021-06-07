@@ -1,13 +1,11 @@
 """ Scientific Numbers """
 
 
-def unit_generator(name):
+def new_unit(name):
     """
-    Returns a function that returns a new instance of _Unit everytime it's called
+    Returns a new UnitArray
     """
-    def unit(exponent=1):
-        return _UnitArray(_Unit(name, exponent))
-    return unit
+    return _UnitArray(_Unit(name))
 
 
 class _Unit:
@@ -16,16 +14,16 @@ class _Unit:
     """
 
     def __init__(self, value='', exponent=1):
-        self.value = value
+        self._value = value
         self.exponent = exponent
 
     def __mul__(self, other):
         if isinstance(other, _UnitArray):
             return other * self
-        elif not isinstance(other, _Unit):
+        if not isinstance(other, _Unit):
             return SciNum(other, self)
-        if self.value == other.value:
-            return _UnitArray(_Unit(self.value, self.exponent + other.exponent))
+        if self._value == other._value:
+            return _UnitArray(_Unit(self._value, self.exponent + other.exponent))
         return _UnitArray(self, other)
 
     def __truediv__(self, other):
@@ -34,21 +32,20 @@ class _Unit:
 
     def __repr__(self):
         exp = f'^{self.exponent}' if self.exponent != 1 else ''
-        return f'{self.value}{exp}'
+        return f'{self._value}{exp}'
 
     def __pow__(self, other):
-        result = _Unit(self.value, self.exponent)
-        # if int(other) == 0:
-        #     return _Unit()
+        result = _Unit(self._value, self.exponent)
         result.exponent *= other
         return result
 
     def __eq__(self, other):
         if isinstance(other, _Unit):
-            return (self.value, self.exponent) == (other.value, other.exponent)
+            return (self._value, self.exponent) == (other._value, other.exponent)
         return False
 
     __rmul__ = __mul__
+    __floordiv__ = __truediv__
 
 
 class _UnitArray(list):
@@ -79,7 +76,7 @@ class _UnitArray(list):
             shared_unit = False
             cur = temp.pop()
             for i, unit in enumerate(new):
-                if cur.value == unit.value:
+                if cur._value == unit._value:
                     new[i] = (new[i] * cur)[0]
                     shared_unit = True
                     break
@@ -103,8 +100,8 @@ class _UnitArray(list):
         if isinstance(other, _UnitArray):
             self.clean()
             other.clean()
-            self_set = set((d.value, d.exponent) for d in self)
-            other_set = set((d.value, d.exponent) for d in other)
+            self_set = set((d._value, d.exponent) for d in self)
+            other_set = set((d._value, d.exponent) for d in other)
             return self_set == other_set
         return False
 
@@ -115,7 +112,7 @@ class _UnitArray(list):
         self.sort()
         return '[' + ' '.join(str(u) for u in self) + ']'
 
-    def sort(self, reverse=False, key=lambda x: (x.exponent < 0, x.value)):
+    def sort(self, reverse=False, key=lambda x: (x.exponent < 0, x._value)):
         """
         Sort the units in the _UnitArray object
         """
@@ -125,8 +122,8 @@ class _UnitArray(list):
         """
         Removes invalid or exponent 0 units from the array
         """
-        for unit in self:
-            if unit.exponent == 0 or not isinstance(unit, _Unit):
+        for unit in self[::-1]:
+            if unit.exponent == 0:
                 self.remove(unit)
 
     __rmul__ = __mul__
@@ -171,6 +168,16 @@ class SciNum:
     def __rtruediv__(self, other):
         return other * SciNum(self.magnitude ** -1, self.units ** -1)
 
+    def __floordiv__(self, other):
+        if not isinstance(other, SciNum):
+            return SciNum(self.magnitude // other, self.units)
+        return SciNum(self.magnitude // other.magnitude, self.units / other.units)
+
+    def __rfloordiv__(self, other):
+        if not isinstance(other, SciNum):
+            return SciNum(other // self.magnitude, self.units ** -1)
+        return SciNum(other.magnitude // self.magnitude, other.units / self.units)
+
     def __pow__(self, power):
         return SciNum(self.magnitude ** power, self.units ** power)
 
@@ -185,57 +192,57 @@ class SciNum:
     def __repr__(self):
         return f'{self.magnitude} {self.units}'
 
-    def __str__(self):
-        return str(self.magnitude)
-
     __radd__ = __add__
     __rmul__ = __mul__
 
 
-# Units
+###########
+#  Units  #
+###########
+
 # Time
-s = unit_generator('s')
-h = unit_generator('h')
-d = unit_generator('d')
+s = new_unit('s')
+h = new_unit('h')
+d = new_unit('d')
 
 # Length
-m = unit_generator('m')
-mi = unit_generator('mi')
-ft = unit_generator('ft')
+m = new_unit('m')
+mi = new_unit('mi')
+ft = new_unit('ft')
 
 # Mass
-kg = unit_generator('kg')
-lb = unit_generator('lb')
+kg = new_unit('kg')
+lb = new_unit('lb')
 
 # Electric current
-A = unit_generator('A')
+A = new_unit('A')
 
 # Temperature
-K = unit_generator('K')
-C = unit_generator('C°')
-F = unit_generator('F°')
+K = new_unit('K')
+C = new_unit('C°')
+F = new_unit('F°')
 
 # Amount of substance
-mol = unit_generator('mol')
+mol = new_unit('mol')
 
 # Luminous intensity
-cd = unit_generator('cd')
+cd = new_unit('cd')
 
 # Compound units
-N = kg() * m() / s(2)
-V = m() / s()
-J = kg() * m(2) / s(2)
-Pa = N() / m(2)
+N = kg * m / s**2
+J = kg * m**2 / s**2
+Pa = N / m**2
+
 
 if __name__ == '__main__':
-    F = 2 * N()
-    P = 5 * Pa()
+    F = 2 * N
+    P = 5 * Pa
     hline = '-' * 30
     print(
         hline,
-        'F = 2 * N()',
+        'F = 2 * N',
         f'>>> F = {F}',
-        'P = 5 * Pa()',
+        'P = 5 * Pa',
         f'>>> P = {P}',
         '',
         'Suma', hline,
@@ -248,9 +255,12 @@ if __name__ == '__main__':
         '',
         'Multiplicación', hline,
         f'F * P = {F * P}',
-        f'3 * F * 5 = {3 * F * 5}',
+        f'2.2 * P * 5 = {2.2 * P * 5}',
         '',
         'División', hline,
-        f'm() / s(2) = {m() / s(2)}',
+        f'P / F = {P / F}',
+        '',
+        'Exponenciación', hline,
+        f'F**2 = {F**2}',
         sep='\n'
     )

@@ -1,14 +1,18 @@
 class gen_fibonacci {
-  constructor() {
-    let a = 0;
-    let b = 1;
-  }
-  next() {
-    temp = a;
-    a = b;
-    b += temp;
-    return a;
-  }
+	constructor() {
+		let a = 0;
+		let b = 1;
+	}
 }
 
-FIBO = gen_fibonacci()
+function next(gen) {
+  temp = gen.a;
+  gen.a = gen.b;
+  gen.b += temp;
+  return gen.a;
+}
+
+FIBO = new gen_fibonacci();
+
+console.log(next(FIBO), FIBO.a, FIBO);
+
