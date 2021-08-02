@@ -232,35 +232,3 @@ cd = new_unit('cd')
 N = kg * m / s**2
 J = kg * m**2 / s**2
 Pa = N / m**2
-
-
-if __name__ == '__main__':
-    F = 2 * N
-    P = 5 * Pa
-    hline = '-' * 30
-    print(
-        hline,
-        'F = 2 * N',
-        f'>>> F = {F}',
-        'P = 5 * Pa',
-        f'>>> P = {P}',
-        '',
-        'Suma', hline,
-        f'F + F = {F + F}',
-        f'F + P = Dimensional error',
-        '',
-        'Resta', hline,
-        f'F - F = {F - F}',
-        f'F - P = Dimensional error',
-        '',
-        'Multiplicación', hline,
-        f'F * P = {F * P}',
-        f'2.2 * P * 5 = {2.2 * P * 5}',
-        '',
-        'División', hline,
-        f'P / F = {P / F}',
-        '',
-        'Exponenciación', hline,
-        f'F**2 = {F**2}',
-        sep='\n'
-    )
