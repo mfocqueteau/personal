@@ -44,15 +44,15 @@ def funcion():
     notebook.add(p3, text="Emisiones gases de Efecto Invernadero")
     notebook.add(p4, text="Análisis Financiero y Costos")
 
-    ###########################   PESTAÑA 1    ##############################
+    # PESTAÑA 1 #
 
     # TITULOS
     titulo1 = tkinter.Label(p1, text="Condiciones Iniciales", bg="light blue")
-    #etiqueta1.pack(fill= tkinter.X)
+    # etiqueta1.pack(fill= tkinter.X)
     titulo1.grid(row=0, column=0)
     titulo2 = tkinter.Label(p1, text="Condiciones Colector Solar", bg="light blue")
     titulo2.grid(row=6, column=0)
-    #etiqueta2.pack(fill= tkinter.X)
+    # etiqueta2.pack(fill= tkinter.X)
     titulo3 = tkinter.Label(p1, text="Condiciones Combustible", bg="light blue")
     titulo3.grid(row=6, column=3)
     titulo4 = tkinter.Label(p1, text="Materiales", bg="light blue")
@@ -121,13 +121,31 @@ def funcion():
 
         if my_listbox.get(tkinter.ANCHOR) == "Poliestireno Extruido":
             my_label.config(
-                text="Descripción: Espuma rígida de altos valores de resistencia térmica.\n Este posee una conductividad térmica típica entre 0,025 [W/mK] \n Dimensiones: 1,2 [m]x 0,6 [m] x 0,02[m]", bg="white")
+                text=(
+                    "Descripción: Espuma rígida de altos valores de resistencia térmica.\n"
+                    "Este posee una conductividad térmica típica entre 0,025 [W/mK]\n"
+                    "Dimensiones: 1,2 [m]x 0,6 [m] x 0,02[m]"
+                ),
+                bg="white"
+            )
         elif my_listbox.get(tkinter.ANCHOR) == "Poliestireno Expandido":
             my_label.config(
-                text="Descripción: una espuma rígida de color blanco de gran trabajabilidad, \n caracterizada por un termoplástico celular de baja densidad \n y alta resistencia físico-mecánica en relación a su reducido peso aparente.\n Conductividad térmica= 0,0384 [W/mK] \n Dimensiones= 1,2 [m] x 0,6 [m] x 0,05[m] ", bg="white")
+                text=(
+                    "Descripción: una espuma rígida de color blanco de gran trabajabilidad,\n"
+                    "caracterizada por un termoplástico celular de baja densidad\n"
+                    "y alta resistencia físico-mecánica en relación a su reducido peso aparente.\n"
+                    "Conductividad térmica= 0,0384 [W/mK]\n"
+                    "Dimensiones= 1,2 [m] x 0,6 [m] x 0,05[m]"
+                ),
+                bg="white")
         elif my_listbox.get(tkinter.ANCHOR) == "Lana de Vidrio":
             my_label.config(
-                text="Descripción: Esta posee un alto poder de aislación térmica, \n una gran absorción acústica y durabilidad e inalterabilidad \n Conductividad térmica=0,0405 [W/m°C] \n Dimensiones= 1,2[m] x 9,6 [m] 0,08[m] ", bg="white")
+                text=(
+                    "Descripción: Esta posee un alto poder de aislación térmica, \n"
+                    "una gran absorción acústica y durabilidad e inalterabilidad \n"
+                    "Conductividad térmica=0, 0405 [W/m°C] \n"
+                    "Dimensiones= 1,2[m] x 9,6 [m] 0,08[m]"
+                ), bg="white")
         elif my_listbox.get(tkinter.ANCHOR) == "Poliuterano":
             my_label.config(
                 text="Descripción: Estos son muy utilizados como aislantes térmicos. Sus principales aplicaciones son las aislación en frigoríficos. \n Conductividad térmica= 0,020 [W/mK] \n Dimensiones: 0,5 [m] x 1[m] x 0,02 [m].", bg="white")
@@ -160,11 +178,11 @@ def funcion():
 
     # TITULOS
     titulo1 = tkinter.Label(p2, text="Paredes Paralelas", bg="light blue")
-    #etiqueta1.pack(fill= tkinter.X)
+    # etiqueta1.pack(fill= tkinter.X)
     titulo1.grid(row=4, column=0)
     titulo2 = tkinter.Label(p2, text="Paredes Transversales", bg="light blue")
     titulo2.grid(row=4, column=2)
-    #etiqueta2.pack(fill= tkinter.X)
+    # etiqueta2.pack(fill= tkinter.X)
     titulo3 = tkinter.Label(p2, text="Calefacción de Agua", bg="light blue")
     titulo3.grid(row=9, column=0)
     titulo4 = tkinter.Label(p2, text="Colectores Solares", bg="light blue")
@@ -239,11 +257,15 @@ def funcion():
     resultado13 = tkinter.Label(p2, text="", bg="white", width=20, height=1)
     resultado14 = tkinter.Label(p2, text="", bg="white", width=20, height=1)
     resultado15 = tkinter.Label(p2, text="", bg="white", width=20, height=1)
-    resultado16 = tkinter.Label(p2, text="""La transferencia total por conducción es de:
-    La transferencia total por convección es de:
-    La transferencia total por radiación es de:
-    La transferencia total por casa es de:
-    La transferenacia total para el coplejo habitacional es de:""", bg="white", width=65, height=5)
+    resultado16 = tkinter.Label(p2, text=(
+        "La transferencia total por conducción es de:"
+        "La transferencia total por convección es de:"
+        "La transferencia total por radiación es de:"
+        "La transferencia total por casa es de:"
+        "La transferenacia total para el coplejo habitacional es de:"
+    ),
+        bg="white", width=65, height=5
+    )
 
     resultado1.grid(row=5, column=1)
     resultado2.grid(row=6, column=1)
