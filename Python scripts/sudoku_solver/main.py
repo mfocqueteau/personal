@@ -8,55 +8,58 @@ class Board(tuple):
         super().__init__()
         self.initial_values = init
 
-    def check_in_row(self, row, num):
-        assert 0 < row < 10
-        assert 0 < num < 10
-        return num in self[row-1]
+    def check_in_row(self, row, num) -> bool:
+        return num in self[row]
 
-    def check_in_column(self, col, num):
-        assert 0 < col < 10
-        assert 0 < num < 10
+    def check_in_column(self, col, num) -> bool:
         for row in self:
-            if row[col-1] == num:
+            if row[col] == num:
                 return True
         return False
 
-    def check_in_square(self, row, col, num):
-        assert 0 < row < 10
-        assert 0 < col < 10
-        assert 0 < num < 10
-        first_row = 3*((row-1) // 3)
-        first_col = 3*((col-1) // 3)
+    def check_in_square(self, row, col, num) -> bool:
+        first_row = 3 * (row // 3)
+        first_col = 3 * (col // 3)
         for row in self[first_row:first_row+3]:
             if num in row[first_col:first_col+3]:
                 return True
         return False
 
-    def check_all(row, col, num):
+    def check_all(self, row, col, num) -> bool:
         return (
-
-        )
-
-    def insert(self, num, row, col):
-        assert 0 < num < 10
-        assert 0 < row < 10
-        assert 0 < col < 10
-        if not (
-            self.initial_values[row-1][col-1] or
             self.check_in_row(row, num) or
             self.check_in_column(col, num) or
             self.check_in_square(row, col, num)
-        ):
-            self[row-1][col-1] = num
+        )
+
+    def insert(self, row, col, num) -> bool:
+        if not self.check_all(row, col, num):
+            self[row][col] = num
             return True
         else:
-            return False
+            return bool(self.initial_values[row][col])
 
-    def __repr__(self):
+    def __solve(self, row, col) -> None:
+        for num in range(1, 10):
+            if self.insert(row, col, num):
+                col = (col + 1) % 9
+                row = row if col else row + 1
+                if (row, col) != (0, 0):
+                    self.__solve(row, col)
+            elif num == 9:
+                self[row][col] = 0
+
+    def solve(self): return self.__solve(0, 0)
+
+    def __str__(self):
         def rep_row(row):
-            return ' '.join((str(num) if num else ' ' for num in row))
+            return ' '.join((str(num) if num else '_' for num in row))
         # top, bottom = '─' * 17 + '¬' + '\n', '\n' + '─' * 18
         return '\n'.join('|' + rep_row(row) + '|' for row in self)
+
+    def __repr__(self):
+        for arr in self.values:
+            print(arr)
 
 
 INITIAL = (
@@ -72,6 +75,6 @@ INITIAL = (
 )
 
 BOARD = Board(INITIAL)
-BOARD.insert(8, 7, 3)
-BOARD.insert(8, 9, 3)
+print(BOARD)
+BOARD.solve
 print(BOARD)

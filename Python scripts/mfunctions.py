@@ -64,12 +64,11 @@ def sobre(num1, num2):
     return 1
 
 
-def gen_clist(my_list):
-    """ Retorna cíclicamente los elementos de una lista """
-    i = 0
+def looper(array_like_object):
+    """ Retorna generador ciclico de los elementos de un objeto tipo array """
     while True:
-        yield my_list[i % len(my_list)]
-        i += 1
+        for item in array_like_object:
+            yield item
 
 
 def binomial(tries, succs, prob):

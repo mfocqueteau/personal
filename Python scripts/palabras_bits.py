@@ -1,9 +1,6 @@
 """ Manejo de vectores lógicos """
 
 
-from with_arrays import gen_valuations
-
-
 def sucesor(palabra):
     """
     Retorna sucesor de una palabra en binario, con overflow
@@ -48,7 +45,7 @@ def dec_to_bin(num):
     return bin(num)[2:].zfill(16)
 
 
-if __name__ == '__main__':
+def main():
     OPCODES = True
     BITWISE = False
 
@@ -77,3 +74,7 @@ if __name__ == '__main__':
                 zip(range(1, NPROPS+1), )
             }
             print(assigned)
+
+
+if __name__ == '__main__':
+    main()
