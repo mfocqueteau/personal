@@ -1,7 +1,7 @@
 """ module_doctsring """
 import tkinter
 from tkinter import ttk
-import backend as back
+import logic
 
 VENTANA = tkinter.Tk()
 VENTANA.iconify()
@@ -17,8 +17,8 @@ NB.add(P1, text="Jugador 1")
 NB.add(P2, text="Jugador 2")
 NB.add(P3, text="Resultados")
 
-GEN_FIBO1 = back.gen_fibonacci()
-GEN_FIBO2 = back.gen_fibonacci()
+GEN_FIBO1 = logic.gen_fibonacci()
+GEN_FIBO2 = logic.gen_fibonacci()
 for _ in range(2):
     next(GEN_FIBO1)
     next(GEN_FIBO2)
@@ -32,7 +32,7 @@ FIBO1 = tkinter.Button(
     text='Next',
     padx=8,
     pady=4,
-    command=lambda: back.fibonacci(ETIQUETA1, GEN_FIBO1)
+    command=lambda: logic.fibonacci(ETIQUETA1, GEN_FIBO1)
 )
 FIBO1.pack()
 
@@ -44,7 +44,7 @@ FIBO2 = tkinter.Button(
     text='Next',
     padx=8,
     pady=4,
-    command=lambda: back.fibonacci(ETIQUETA2, GEN_FIBO2)
+    command=lambda: logic.fibonacci(ETIQUETA2, GEN_FIBO2)
 )
 FIBO2.pack()
 
@@ -57,7 +57,7 @@ COLOR = tkinter.Button(
     text='Cambiar color',
     padx=8,
     pady=4,
-    command=lambda: back.random_color(ETIQUETA3, back.CHARS)
+    command=lambda: logic.random_color(ETIQUETA3, logic.CHARS)
 )
 COLOR.pack()
 
@@ -66,7 +66,7 @@ RESULTS = tkinter.Button(
     text='Calcular',
     padx=8,
     pady=4,
-    command=lambda: back.calculate(ETIQUETA1, ETIQUETA2, ETIQUETA3)
+    command=lambda: logic.calculate(ETIQUETA1, ETIQUETA2, ETIQUETA3)
 )
 RESULTS.pack()
 

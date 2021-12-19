@@ -1,27 +1,24 @@
 """ Civilizaciones """
 import edificios
-from collections import deque, namedtuple
+from collections import deque
+from typing import NamedTuple
 
 
-Atributos = namedtuple(
-    'Atributos',
-    (
-        'id',
-        'tipo',
-        'centro_urbano',
-        'cuartel',
-        'dccowork',
-        'muralla',
-        'trabajador',
-        'soldado',
-        'ayudante',
-        'oro',
-        'madera',
-        'piedra',
-        'puntos_de_tecnologia',
-        'usuario'
-    )
-)
+class Atributos(NamedTuple):
+    id: int
+    tipo: int
+    centro_urbano: bool
+    cuartel: int
+    dccowork: int
+    muralla: int
+    trabajador: int
+    soldado: int
+    ayudante: int
+    oro: int
+    madera: int
+    piedra: int
+    puntos_de_tecnologia: int
+    usuario: bool
 
 
 class Civilizacion:
@@ -56,12 +53,12 @@ class Civilizacion:
     def defensa_base(self, _):
         hps = sum(soldado.hp for soldado in self.soldados if soldado.en_guardia)
         hpt = sum(trabajador.hp for trabajador in self.trabajadores)
-        hpe = sum(edificio.hp for edificio in self.edificios)
-        self._defensa_base = hps + hpt + hpe
+        # hpe = sum(edificio.hp for edificio in self.edificios)
+        self._defensa_base = hps + hpt  # + hpe
 
     def ataque(self, otro):
         if self.p_ataque >= otro.p_defensa:
-            print(f'¡{otro} ha sido eliminado directamente!')
+            print(f"¡{otro} ha sido eliminado directamente!")
         else:
             power = self.p_ataque
             power = self.ataque_en_serie(otro.murallas, power)
@@ -70,9 +67,9 @@ class Civilizacion:
             power = self.ataque_en_serie(otro.trabajadores, power)
             power = self.ataque_en_serie([otro.centro_urbano], power)
             if otro.centro_urbano.hp > 0:
-                print(f'¡{otro} ha sobrevivido al ataque!')
+                print(f"¡{otro} ha sobrevivido al ataque!")
             else:
-                print(f'¡{otro} perdió su centro urbano!')
+                print(f"¡{otro} perdió su centro urbano!")
 
     def ataque_en_serie(self, entidades, power):
         if power <= 0:
@@ -122,7 +119,7 @@ class LaComarca(Civilizacion):
     @fuerza.setter
     def fuerza(self, valor):
         self._fuerza = valor
-        self.p_ataque = self.fuerza + self.tecnologia
+        self.p_ataque = self.fuerza + self._tecnologia
 
     @piedra.setter
     def piedra(self, valor):
@@ -143,8 +140,8 @@ class Cobreloa(Civilizacion):
 
 def cargar(ruta):
     DATOS = {}
-    with open(ruta, 'r') as file:
-        LINEAS = map(lambda linea: linea.strip().split(','), file.readlines())
+    with open(ruta, "r") as file:
+        LINEAS = map(lambda linea: linea.strip().split(","), file.readlines())
         next(LINEAS)
         for linea in LINEAS:
             DATOS[linea[0]] = Atributos(*linea)

@@ -1,9 +1,13 @@
 """ Data structures """
-from collections import deque, defaultdict
+from collections import deque
+from typing import Callable, Iterable
+
+
+Empty = (_ for _ in [])
 
 
 class stack(list):
-    """ Stack data structure implementation """
+    """Stack data structure implementation"""
 
     def extract(self):
         return self.pop(-1)
@@ -14,7 +18,7 @@ class stack(list):
 
 
 class queue(deque):
-    """ Queue data structure implementation """
+    """Queue data structure implementation"""
 
     def extract(self):
         return self.popleft()
@@ -24,28 +28,49 @@ class queue(deque):
             self.append(item)
 
     def __repr__(self):
-        return '[' + ', '.join(x.__repr__() for x in self) + ']'
+        return "[" + ", ".join(x.__repr__() for x in self) + "]"
 
 
-class olist(list):
-    """ Ordered list implementation """
+class Olist(list):
+    """Lista que se mantiene ordenada eficientemente"""
 
-    def __init__(self, item_type: type, sorting_key=None, reverse=False):
+    def __init__(
+        self,
+        iterable: Iterable = Empty,
+        key: Callable = lambda x: x,
+        reverse: bool = False,
+    ):
         super().__init__()
-        self.type = item_type
+        self.key = key
         self.reverse = reverse
-        self.sorting_key = sorting_key
-        self.sort(key=sorting_key, reverse=reverse)
+        for element in iterable:
+            self.add(element)
 
-    def add(self, *items):
-        for item in items:
-            assert isinstance(item, self.type), 'item type doesn\'t match this list type'
-            self.append(item)
-        self.sort(key=self.sorting_key, reverse=self.reverse)
+    def toggle_reverse(self) -> None:
+        """Invertir sentido de la lista"""
+        self.reverse = not self.reverse
+        self.sort()
+
+    def add(self, element) -> None:
+        """Inserción ordenada de números"""
+        self.append(element)
+        self.sort()
+
+    def sort(self):
+        super().sort(key=self.key, reverse=self.reverse)
+
+    def __repr__(self) -> str:
+        return f"Olist({super().__repr__()})"
+
+    def __add__(self, other: list) -> list:
+        result = Olist(self, self.key, self.reverse)
+        for element in other:
+            result.add(element)
+        return result
 
 
 class Tree(list):
-    """ Tree data structure implementation """
+    """Tree data structure implementation"""
 
     def __init__(self, content=None, children=None):
         self.content = content
@@ -76,8 +101,8 @@ class Tree(list):
             item.parent = self
             self.append(item)
 
-    def search(self, value, method='bfs'):
-        """ Search thorugh the tree """
+    def search(self, value, method="bfs"):
+        """Search thorugh the tree"""
         if self.content == value:
             return stack((self.content,))
         to_visit = self.build_struct(method)
@@ -98,17 +123,13 @@ class Tree(list):
             return self._parent.walk_up(path)
         return path
 
-    def build_struct(self, method='bfs'):
-        struct = (
-            queue(self) if method == 'bfs' else
-            stack(self) if method == 'dfs' else
-            None
-        )
+    def build_struct(self, method="bfs"):
+        struct = queue(self) if method == "bfs" else stack(self) if method == "dfs" else None
         if struct is None:
-            raise ValueError('method must be either \'bfs\' or \'dfs\'')
+            raise ValueError("method must be either 'bfs' or 'dfs'")
         return struct
 
-    def walk(self, method='bfs'):
+    def walk(self, method="bfs"):
         yield self
         to_visit = self.build_struct(method)
         while to_visit:
@@ -137,7 +158,7 @@ class Tree(list):
 
 
 class ABB:
-    """ Binary Search Tree """
+    """Binary Search Tree"""
 
     def __init__(self, content, *children):
         self.content = content
@@ -167,10 +188,10 @@ class ABB:
 
     def to_abb(self, item):
         if isinstance(item, ABB):
-            type_error = f'can\'t insert value of type {item.type} into tree of type {self.type}'
+            type_error = f"can't insert value of type {item.type} into tree of type {self.type}"
             assert isinstance(item.content, self.type), type_error
             return item
-        type_error = f'can\'t insert value of type {type(item)} into tree of type {self.type}'
+        type_error = f"can't insert value of type {type(item)} into tree of type {self.type}"
         assert isinstance(item, self.type), type_error
         return ABB(item)
 
@@ -196,24 +217,3 @@ class ABB:
 
     def __repr__(self):
         return str(self.content)
-
-
-class HashTable(defaultdict):
-    """ Hashed table implementation """
-
-    def __init__(self, length):
-        super().__init__(stack)
-        self.length = length
-
-    def store(self, value):
-        self[self.get_key(value)].push(value)
-
-    def hash(self, value):
-        assert isinstance(value, (int, float))
-        return int((value**2 / 3) % self.length)
-
-    def get_key(self, value):
-        return self.hash(value)
-
-    def __repr__(self):
-        return '{\n' + '\n'.join(f'  {key}: {value}' for key, value in self.items()) + '\n}'

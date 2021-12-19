@@ -7,9 +7,11 @@ def sucesor(palabra):
     """
     largo = len(palabra)
     for i, bit in enumerate(palabra[::-1]):
-        if bit == '0':
-            return palabra[:largo-i-1] + '1' + '0' * (largo - len(palabra[:largo-i-1]) - 1)
-    return '1' + '0' * largo
+        if bit == "0":
+            return (
+                palabra[: largo - i - 1] + "1" + "0" * (largo - len(palabra[: largo - i - 1]) - 1)
+            )
+    return "1" + "0" * largo
 
 
 def gen_sucesores(palabra):
@@ -34,7 +36,7 @@ def bin_to_dec(palabra):
     """
     dec = 0
     for i, bit in enumerate(palabra[::-1]):
-        dec += int(bit) * 2**i
+        dec += int(bit) * 2 ** i
     return dec
 
 
@@ -47,34 +49,44 @@ def dec_to_bin(num):
 
 def main():
     OPCODES = True
-    BITWISE = False
 
     if OPCODES:
         BITS = 5
-        SUCESORES = gen_sucesores('0' * BITS)
+        SUCESORES = gen_sucesores("0" * BITS)
 
         INSTRUCCIONES = (
-            'NOP', 'MOV', 'ADD', 'SUB', 'AND', 'OR', 'NOT', 'XOR', 'SHL',
-            'SHR', 'INC', 'DEC', 'CMP', 'JMP', 'JEQ', 'JNE', 'JGT', 'JGE',
-            'JLT', 'JLE', 'JCR', 'PUSH', 'POP', 'CALL', 'RET', 'IN'
+            "NOP",
+            "MOV",
+            "ADD",
+            "SUB",
+            "AND",
+            "OR",
+            "NOT",
+            "XOR",
+            "SHL",
+            "SHR",
+            "INC",
+            "DEC",
+            "CMP",
+            "JMP",
+            "JEQ",
+            "JNE",
+            "JGT",
+            "JGE",
+            "JLT",
+            "JLE",
+            "JCR",
+            "PUSH",
+            "POP",
+            "CALL",
+            "RET",
+            "IN",
         )
 
         for j, (ins, opc) in enumerate(zip(INSTRUCCIONES, SUCESORES)):
-            end = '\n' if j % 2 else ' '
+            end = "\n" if j % 2 else " "
             print(f"'{ins}': '{opc}',", end=end)
 
-    if BITWISE:
-        NPROPS = 3
-        VALUATIONS = gen_valuations(nprops=NPROPS)
-        KEYS = range(1, NPROPS + 1)
-        VALUES = map(lambda k: (2**(k-1) & val) // 2**(k-1), KEYS)
-        for val in VALUATIONS:
-            assigned = {
-                key: value for key, value in
-                zip(range(1, NPROPS+1), )
-            }
-            print(assigned)
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -13,7 +13,7 @@ class _Unit:
     Basic structure for dimension units
     """
 
-    def __init__(self, value='', exponent=1):
+    def __init__(self, value="", exponent=1):
         self._value = value
         self.exponent = exponent
 
@@ -31,8 +31,8 @@ class _Unit:
         return self * other
 
     def __repr__(self):
-        exp = f'^{self.exponent}' if self.exponent != 1 else ''
-        return f'{self._value}{exp}'
+        exp = f"^{self.exponent}" if self.exponent != 1 else ""
+        return f"{self._value}{exp}"
 
     def __pow__(self, other):
         result = _Unit(self._value, self.exponent)
@@ -62,7 +62,7 @@ class _UnitArray(list):
         if not self == other:
             self.sort()
             other.sort()
-            raise ValueError(f'Dimensional error when trying to add: {self} + {other}')
+            raise ValueError(f"Dimensional error when trying to add: {self} + {other}")
         return self
 
     def __mul__(self, other):
@@ -88,13 +88,13 @@ class _UnitArray(list):
     def __truediv__(self, other):
         if isinstance(other, _Unit):
             other = _UnitArray(other)
-        return self * other**-1
+        return self * other ** -1
 
     def __rtruediv__(self, other):
-        return other * self**-1
+        return other * self ** -1
 
     def __pow__(self, other):
-        return _UnitArray(*tuple(unit**other for unit in self))
+        return _UnitArray(*tuple(unit ** other for unit in self))
 
     def __eq__(self, other):
         if isinstance(other, _UnitArray):
@@ -105,12 +105,9 @@ class _UnitArray(list):
             return self_set == other_set
         return False
 
-    def __call__(self, power=1):
-        return self ** power
-
     def __repr__(self):
         self.sort()
-        return '[' + ' '.join(str(u) for u in self) + ']'
+        return "[" + " ".join(str(u) for u in self) + "]"
 
     def sort(self, reverse=False, key=lambda x: (x.exponent < 0, x._value)):
         """
@@ -139,7 +136,7 @@ class SciNum:
         if isinstance(units, _Unit):
             units = _UnitArray(units)
         elif not isinstance(units, _UnitArray):
-            raise ValueError('Units parameter must be of type _Unit or _UnitArray')
+            raise ValueError("Units parameter must be of type _Unit or _UnitArray")
         self.units = units
 
     def __add__(self, other):
@@ -186,11 +183,8 @@ class SciNum:
             return (self.magnitude, self.units) == (other.magnitude, other.units)
         return False
 
-    def __call__(self, exponent=1):
-        return self ** exponent
-
     def __repr__(self):
-        return f'{self.magnitude} {self.units}'
+        return f"{self.magnitude} {self.units}"
 
     __radd__ = __add__
     __rmul__ = __mul__
@@ -201,34 +195,34 @@ class SciNum:
 ###########
 
 # Time
-s = new_unit('s')
-h = new_unit('h')
-d = new_unit('d')
+s = new_unit("s")
+h = new_unit("h")
+d = new_unit("d")
 
 # Length
-m = new_unit('m')
-mi = new_unit('mi')
-ft = new_unit('ft')
+m = new_unit("m")
+mi = new_unit("mi")
+ft = new_unit("ft")
 
 # Mass
-kg = new_unit('kg')
-lb = new_unit('lb')
+kg = new_unit("kg")
+lb = new_unit("lb")
 
 # Electric current
-A = new_unit('A')
+A = new_unit("A")
 
 # Temperature
-K = new_unit('K')
-C = new_unit('C°')
-F = new_unit('F°')
+K = new_unit("K")
+C = new_unit("C°")
+F = new_unit("F°")
 
 # Amount of substance
-mol = new_unit('mol')
+mol = new_unit("mol")
 
 # Luminous intensity
-cd = new_unit('cd')
+cd = new_unit("cd")
 
 # Compound units
-N = kg * m / s**2
-J = kg * m**2 / s**2
-Pa = N / m**2
+N = kg * m / s ** 2
+J = kg * m ** 2 / s ** 2
+Pa = N / m ** 2
