@@ -1,0 +1,35 @@
+{
+    "window.titleBarStyle": "custom",
+    "editor.fontSize": 12,
+    "editor.formatOnSave": true,
+    "telemetry.telemetryLevel": "off",
+    "terminal.integrated.fontSize": 12,
+    "editor.fontFamily": "'Noto Sans Mono', 'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "python.linting.enabled": true,
+    "python.formatting.blackArgs": [
+        "--line-length=99"
+    ],
+    "python.linting.pycodestyleArgs": [
+        "--max-line-length=99"
+    ],
+    "C_Cpp.clang_format_style": "Mozilla",
+    "editor.tabSize": 2,
+    "[python]": {
+        "editor.tabSize": 4
+    },
+    "python.formatting.autopep8Args": [
+        "--max-line=99"
+    ],
+    "files.trimTrailingWhitespace": true,
+    "python.linting.pycodestyleEnabled": true,
+    "liveshare.presence": true,
+    "workbench.startupEditor": "none",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "workbench.colorTheme": "One Dark Pro Darker",
+    "workbench.editorAssociations": {
+        "*.pdf": "latex-workshop-pdf-hook",
+        "*.csv": "gc-excelviewer-csv-editor"
+    },
+    "editor.cursorBlinking": "expand",
+    "editor.smoothScrolling": true
+}
