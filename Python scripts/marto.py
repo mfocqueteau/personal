@@ -23,6 +23,28 @@ def take_the_time(foo):
     return wrapper
 
 
+def observe(foo):
+    def wrapper(*args, **kwargs):
+        _, _id = str(perf_counter()).split(".")
+        print(f"begin {foo.__name__} @ {_id}")
+        print(f"  args: {args}")
+        print(f"  kwargs: {kwargs}")
+        t_0 = perf_counter()
+        result = foo(*args, **kwargs)
+        t_d = perf_counter() - t_0
+        print(f"  return: {result}")
+        print(f"  time: {t_d}")
+        print(f"end {foo.__name__} @ {_id}")
+        return result
+
+    return wrapper
+
+
+def dprint(title: str, *args, **kwargs):
+    print(title + "-" * abs(100 - len(title)), *args, "-" * 100, **kwargs, sep="\n")
+
+
+@observe
 def rdivision(numerator: int, denominator: int) -> tuple[int, int]:
     """División con resto. Retorna tupla (cuociente, resto)"""
     quotient = numerator // denominator

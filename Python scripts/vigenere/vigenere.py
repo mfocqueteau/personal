@@ -1,10 +1,10 @@
 from typing import Callable, Generator
 
 
-def __wordloop(word: str) -> Generator:
-    word = "".join(word.split(" "))
+def __textloop(text: str) -> Generator:
+    text = "".join(text.split(" "))
     while True:
-        for char in word:
+        for char in text:
             yield char
 
 
@@ -16,10 +16,10 @@ def __rcross(charset: str, char1: str, char2: str) -> str:
     return charset[(charset.index(char1) - charset.index(char2)) % 26]
 
 
-def __common_subroutine(key: str, word: str, cross_func: Callable) -> str:
+def __common_subroutine(key: str, text: str, cross_func: Callable) -> str:
     result = ""
-    key_loop = __wordloop(key)
-    for char in word:
+    key_loop = __textloop(key)
+    for char in text:
         if char in __ABC_MINUS:
             charset, case = __ABC_MINUS, str.lower
         elif char in __ABC_MAYUS:
@@ -31,12 +31,12 @@ def __common_subroutine(key: str, word: str, cross_func: Callable) -> str:
     return result
 
 
-def encrypt(word: str, *, key: str) -> str:
-    return __common_subroutine(key, word, __cross)
+def encrypt(text: str, *, key: str) -> str:
+    return __common_subroutine(key, text, __cross)
 
 
-def decrypt(word: str, *, key: str) -> str:
-    return __common_subroutine(key, word, __rcross)
+def decrypt(text: str, *, key: str) -> str:
+    return __common_subroutine(key, text, __rcross)
 
 
 __ABC_MINUS = "abcdefghijklmnopqrstuvwxyz"

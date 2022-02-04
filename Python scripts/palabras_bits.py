@@ -1,4 +1,4 @@
-""" Manejo de vectores lógicos """
+""" Palabras bits """
 
 
 def sucesor(palabra):
