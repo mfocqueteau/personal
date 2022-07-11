@@ -1,13 +1,17 @@
 """ Libreria del Marto """
 import math
 from collections import namedtuple
-from functools import cache
+from functools import cache, reduce
 from time import perf_counter
 from typing import Container, Generator, Iterable, Union
 
 
 Timed = namedtuple("Timed", "time value")
 Empty = (_ for _ in [])
+
+
+def pipe(*fns):
+    return lambda x: reduce(lambda x, f: f(x), fns, x)
 
 
 def take_the_time(foo):
@@ -45,7 +49,7 @@ def dprint(title: str, *args, **kwargs):
 
 
 @observe
-def rdivision(numerator: int, denominator: int) -> tuple[int, int]:
+def rdivision(numerator: int, denominator: int) -> "tuple[int, int]":
     """División con resto. Retorna tupla (cuociente, resto)"""
     quotient = numerator // denominator
     remainder = numerator - quotient * denominator
@@ -57,7 +61,7 @@ def anti_harmonic(nums: Iterable[Union[int, float]]) -> float:
     numerator = 0
     denominator = 0
     for num in nums:
-        numerator += num ** 2
+        numerator += num**2
         denominator += num
     return numerator / denominator
 
@@ -116,7 +120,7 @@ class Looper:
 
 def binomial(tries: int, succs: int, prob: float) -> float:
     """Retorna la probabilidad de ocurrencia de 'succs' eventos en 'tries' intentos"""
-    return sobre(tries, succs) * prob ** succs * (1 - prob) ** (tries - succs)
+    return sobre(tries, succs) * prob**succs * (1 - prob) ** (tries - succs)
 
 
 def cumulative_binomial(tries: int, start: int, finish: int, prob: float) -> float:
@@ -124,11 +128,11 @@ def cumulative_binomial(tries: int, start: int, finish: int, prob: float) -> flo
     return sum(binomial(tries, i, prob) for i in range(start, finish + 1))
 
 
-def std(data: list[list]) -> tuple:
+def std(data: "list[list]") -> tuple:
     """Desviación estándar de los datos"""
     sums = sum(data)
     length = len(data)
     average = sums / length
     var = sum((num - average) ** 2 for num in data) / length
-    res = var ** 0.5
+    res = var**0.5
     return res, sums, sums / res

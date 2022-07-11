@@ -1,25 +1,28 @@
 from typing import Callable, Generator
+from operator import add, sub
+from itertools import cycle
 
 
-def __textloop(text: str) -> Generator:
+Operation = Callable[[int, int], int]
+Operation: Operation
+
+
+def __textloop(text: str) -> Generator[str, None, None]:
     text = "".join(text.split(" "))
-    while True:
-        for char in text:
-            yield char
+    return cycle(text)
+    # while True:
+    #     for char in text:
+    #         yield char
 
 
-def __cross(charset: str, char1: str, char2: str) -> str:
-    return charset[(charset.index(char1) + charset.index(char2)) % 26]
+def __normalize(charset, char1, char2, operation: Operation):
+    return operation(charset.index(char1), charset.index(char2)) % len(charset)
 
 
-def __rcross(charset: str, char1: str, char2: str) -> str:
-    return charset[(charset.index(char1) - charset.index(char2)) % 26]
-
-
-def __common_subroutine(key: str, text: str, cross_func: Callable) -> str:
+def __common_subroutine(key: str, text: str, op: Operation) -> str:
     result = ""
     key_loop = __textloop(key)
-    for char in text:
+    for char, k in zip(text, key_loop):
         if char in __ABC_MINUS:
             charset, case = __ABC_MINUS, str.lower
         elif char in __ABC_MAYUS:
@@ -27,17 +30,23 @@ def __common_subroutine(key: str, text: str, cross_func: Callable) -> str:
         else:
             result += char
             continue
-        result += cross_func(charset, char, case(next(key_loop)))
+        result += charset[__normalize(charset, char, case(k), op)]
     return result
 
 
 def encrypt(text: str, *, key: str) -> str:
-    return __common_subroutine(key, text, __cross)
+    return __common_subroutine(key, text, add)
 
 
 def decrypt(text: str, *, key: str) -> str:
-    return __common_subroutine(key, text, __rcross)
+    return __common_subroutine(key, text, sub)
 
 
 __ABC_MINUS = "abcdefghijklmnopqrstuvwxyz"
 __ABC_MAYUS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+c = encrypt("LEMMiNO watches Gravity Falls", key="dipper")
+d = decrypt(c, key="dipper")
+
+print(c)
+print(d)
