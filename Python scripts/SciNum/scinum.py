@@ -226,3 +226,78 @@ cd = new_unit("cd")
 N = kg * m / s ** 2
 J = kg * m ** 2 / s ** 2
 Pa = N / m ** 2
+
+
+# from operator import mul
+# from functools import reduce
+
+
+# def _short_type(obj):
+#     return str(type(obj)).strip(">").split(" ")[1]
+
+
+# class Unit:
+#     def __init__(self, name, exp=1):
+#         self.name = name
+#         self.exp = exp
+
+#     def __eq__(self, other):
+#         return self.name == other.name
+
+#     def __mul__(self, other):
+#         if self == other:
+#             return Unit(self.name, exp=self.exp + other.exp)
+#         return UnitArray([self, other])
+
+#     def __rmul__(self, other):
+#         if isinstance(other, (int, float)):
+#             return Scinum(other, UnitArray([self]))
+
+#     def __pow__(self, other):
+#         return Unit(self.name, exp=self.exp * other)
+
+#     def __str__(self):
+#         str_exp = '' if self.exp == 1 else f'^{self.exp}'
+#         return self.name + str_exp
+
+
+# class UnitArray(list):
+#     def __init__(self, units):
+#         super().__init__(filter(lambda u: u.exp != 0, units))
+#         self.sort(key=lambda u: (u.exp < 0, u.name))
+
+#     def __mul__(self, other):
+#         if isinstance(other, Unit):
+#             if other in self:
+#                 r = self.pop(self.index(other))
+#                 return UnitArray([*self, r * other])
+#             return UnitArray([*self, other])
+#         return reduce(mul, other, self)
+
+#     def __pow__(self, exponent: int):
+#         return UnitArray([u**exponent for u in self])
+
+#     def __str__(self):
+#         return f'[{" ".join(str(u) for u in self)}]'
+
+
+# class Scinum(float):
+#     def __new__(cls, value, units):
+#         obj = float.__new__(cls, value)
+#         obj.units = units
+#         return obj
+
+#     def __mul__(self, other):
+#         if isinstance(other, Scinum):
+#             return Scinum(float.__mul__(self, other), self.units * other.units)
+#         if isinstance(other, (int, float)):
+#             return Scinum(float.__mul__(self, other), self.units)
+#         if isinstance(other, (Unit, UnitArray)):
+#             return Scinum(self, self.units * other)
+#         raise TypeError(
+#             'unsupported operand type(s) for *: ' +
+#             f'{_short_type(self)} and {_short_type(other)}'
+#         )
+
+#     def __str__(self):
+#         return f'{float.__str__(self)} {self.units}'
